@@ -1,8 +1,8 @@
-package laboratorio-tpo1-grupo2;
+
 
 public abstract class Indumentaria {
-    private String nombrePrenda;
-    private Estilo estilo;
+    protected String nombrePrenda;
+    protected Estilo estilo;
 
     public Indumentaria(String prenda, Estilo unEst) {
         this.nombrePrenda = prenda;
@@ -13,37 +13,44 @@ public abstract class Indumentaria {
 
 }
 
-public class ParteDeArriba extends Indumentaria {
+ class ParteDeArriba extends Indumentaria {
     public ParteDeArriba(String nPrenda, Estilo unEstilo) {
         super(nPrenda, unEstilo);
     }
 
     public String confeccionar(){
-        estilo.aplicarPaletaColores(nombrePrenda),
-        estilo.aplicarDetallesTextura(nombrePrenda);
+        estilo.aplicarPaletaColores(nombrePrenda);
+        estilo.aplicarDetalleTextura(nombrePrenda);
+
+        return "";
     }
 }
 
-public class Vestido extends Indumentaria {
+ class Vestido extends Indumentaria {
     public Vestido(String nombrePrenda, Estilo estilo) {
         super(nombrePrenda, estilo);
     }
 
     @Override
-    public String confeccionar() {
-                estilo.aplicarPaletaColores(nombrePrenda),
-                estilo.aplicarDetallesTextura(nombrePrenda);
+     public String confeccionar() {
+                estilo.aplicarPaletaColores(nombrePrenda);
+                estilo.aplicarDetalleTextura(nombrePrenda);
+
+                return "";
     }
 
-    public class ParteDeAbajo extends Indumentaria {
+     class ParteDeAbajo extends Indumentaria {
         public ParteDeAbajo(String nombrePrenda, Estilo estilo) {
             super(nombrePrenda, estilo);
+
         }
 
     @Override
     public String confeccionar() {
-                estilo.aplicarPaletaColores(nombrePrenda),
-                estilo.aplicarDetallesTextura(nombrePrenda);
+                estilo.aplicarPaletaColores(nombrePrenda);
+                estilo.aplicarDetalleTextura(nombrePrenda);
+
+                return "";
     }
     }
 }

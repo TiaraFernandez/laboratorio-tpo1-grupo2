@@ -1,3 +1,4 @@
+
 /***
  * Implementador concreto
  * EstiloRockero
