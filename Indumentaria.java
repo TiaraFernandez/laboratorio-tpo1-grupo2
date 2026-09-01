@@ -13,44 +13,47 @@ public abstract class Indumentaria {
 
 }
 
- class ParteDeArriba extends Indumentaria {
+class ParteDeArriba extends Indumentaria {
     public ParteDeArriba(String nPrenda, Estilo unEstilo) {
         super(nPrenda, unEstilo);
     }
 
     public String confeccionar(){
-        estilo.aplicarPaletaColores(nombrePrenda);
-        estilo.aplicarDetalleTextura(nombrePrenda);
+        String prendaFinal = this.nombrePrenda;
+        prendaFinal = prendaFinal + " " + estilo.aplicarPaletaColores(nombrePrenda);
+        prendaFinal = prendaFinal + " de " +estilo.aplicarDetalleTextura(nombrePrenda);
 
-        return "";
+        return prendaFinal;
     }
 }
 
- class Vestido extends Indumentaria {
-    public Vestido(String nombrePrenda, Estilo estilo) {
-        super(nombrePrenda, estilo);
+class Vestido extends Indumentaria {
+    public Vestido(Estilo estilo) {
+        super("Vestido", estilo);
     }
-
-    @Override
-     public String confeccionar() {
-                estilo.aplicarPaletaColores(nombrePrenda);
-                estilo.aplicarDetalleTextura(nombrePrenda);
-
-                return "";
-    }
-
-     class ParteDeAbajo extends Indumentaria {
-        public ParteDeAbajo(String nombrePrenda, Estilo estilo) {
-            super(nombrePrenda, estilo);
-
-        }
 
     @Override
     public String confeccionar() {
-                estilo.aplicarPaletaColores(nombrePrenda);
-                estilo.aplicarDetalleTextura(nombrePrenda);
+        String prendaFinal = this.nombrePrenda;
+        prendaFinal = prendaFinal + " " + estilo.aplicarPaletaColores(nombrePrenda);
+        prendaFinal = prendaFinal + " de " + estilo.aplicarDetalleTextura(nombrePrenda);
 
-                return "";
+        return prendaFinal;
     }
+}
+
+class ParteDeAbajo extends Indumentaria {
+    public ParteDeAbajo(String nombrePrenda, Estilo estilo) {
+        super(nombrePrenda, estilo);
+
+    }
+
+    @Override
+    public String confeccionar() {
+        String prendaFinal = this.nombrePrenda;
+        prendaFinal = prendaFinal + " " +estilo.aplicarPaletaColores(nombrePrenda);
+        prendaFinal = prendaFinal + " de " + estilo.aplicarDetalleTextura(nombrePrenda);
+
+        return prendaFinal;
     }
 }
