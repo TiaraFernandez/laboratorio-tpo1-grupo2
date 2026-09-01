@@ -5,7 +5,9 @@ import java.util.concurrent.*;
 
 public class Main {
     public static void main(String[] args) {
-        List<Indumentaria> prendasList = new ArrayList<>();
+        List<Indumentaria> parteArribaList = new ArrayList<>();
+        List<Indumentaria> parteAbajoList = new ArrayList<>();
+        List<Indumentaria> vestidoList = new ArrayList<>();
 
         EstiloRockero rockera = new EstiloRockero();
         EstiloPreppy preppy = new EstiloPreppy();
@@ -15,8 +17,7 @@ public class Main {
         CountDownLatch pestillo = new CountDownLatch(3);
 
         /* Se crean los callables con las tareas a realizar */
-        Callable<List<Indumentaria>> generarPrendasArriba = () -> {
-            List<Indumentaria> parteArribaList = new ArrayList<>();
+        Callable<String> generarPrendasArriba = () -> {
             int estilo, prenda;
             String[] tipoPrenda = { "Remera", "Abrigo", "Musculosa" };
 
@@ -29,11 +30,10 @@ public class Main {
                 parteArribaList.add(new ParteDeArriba(tipoPrenda[prenda], arrayEstilo[estilo]));
             }
             pestillo.countDown();
-            return parteArribaList;
+            return "Se generó la lista de partes de arriba con exito.";
         };
 
-        Callable<List<Indumentaria>> generarPrendasAbajo = () -> {
-            List<Indumentaria> parteAbajoList = new ArrayList<>();
+        Callable<String> generarPrendasAbajo = () -> {
             int estilo, prenda;
             String[] tipoPrenda = { "Pantalon", "Short", "Pollera" };
             Random random = new Random();
@@ -46,11 +46,10 @@ public class Main {
 
             }
             pestillo.countDown();
-            return parteAbajoList;
+            return "Se generó la lista de prendas de abajo con exito";
         };
 
-        Callable<List<Indumentaria>> generarPrendasVestido = () -> {
-            List<Indumentaria> vestidoList = new ArrayList<>();
+        Callable<String> generarPrendasVestido = () -> {
             int estilo;
             Random random = new Random();
 
@@ -61,37 +60,40 @@ public class Main {
 
             }
             pestillo.countDown();
-            return vestidoList;
+            return "Se generó la lista de vestidos con exito.";
         };
 
-        Future<List<Indumentaria>> fArriba = ejecutor.submit(generarPrendasArriba);
-        Future<List<Indumentaria>> fAbajo = ejecutor.submit(generarPrendasAbajo);
-        Future<List<Indumentaria>> fVestidos = ejecutor.submit(generarPrendasVestido);
+        
 
         Callable<String> mostrarPrendas = () -> { /* Imprimo la lista de las prendas */
             pestillo.await(); // espera hasta que terminen de armarse las sublistas
-            prendasList.addAll(fAbajo.get());
-            prendasList.addAll(fArriba.get());
-            prendasList.addAll(fVestidos.get());
-
             System.out.println("La lista de prendas de moda generada es: ");
-            for (Indumentaria prenda : prendasList) {
+            /* Imprime cada una de las listas */
+            for (Indumentaria prenda : parteAbajoList) {
+                System.out.println("\t" + prenda.confeccionar());
+            }
+            for (Indumentaria prenda : parteArribaList) {
+                System.out.println("\t" + prenda.confeccionar());
+            }
+            for (Indumentaria prenda : vestidoList) {
                 System.out.println("\t" + prenda.confeccionar());
             }
             return "Se mostraron todas las prendas con exito.";
         };
 
         /* Se envian las tareas el executor y recibimos los futures correspondientes */
-
+        Future<String> fArriba = ejecutor.submit(generarPrendasArriba);
+        Future<String> fAbajo = ejecutor.submit(generarPrendasAbajo);
+        Future<String> fVestidos = ejecutor.submit(generarPrendasVestido);
         Future<String> futureMostrar = ejecutor.submit(mostrarPrendas);
 
         try {
-            String resultado;
-            // resultado = futureGenerar.get();
-            // System.out.println(resultado);
-            resultado = futureMostrar.get();
-            System.out.println(resultado);
-
+            System.out.println("Mensajes de control: "
+                + "\n\t"+fArriba.get()
+                + "\n\t"+fAbajo.get()
+                + "\n\t"+fVestidos.get()
+                + "\n\t"+futureMostrar.get()
+            );
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         } finally {
