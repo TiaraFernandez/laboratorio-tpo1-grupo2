@@ -1,4 +1,8 @@
+import java.util.Random;
 
+/***
+ * Indumentaria - Clase abstracta
+ */
 
 public abstract class Indumentaria {
     protected String nombrePrenda;
@@ -10,12 +14,14 @@ public abstract class Indumentaria {
     }
 
     public abstract String confeccionar();
-
 }
 
 class ParteDeArriba extends Indumentaria {
-    public ParteDeArriba(String nPrenda, Estilo unEstilo) {
-        super(nPrenda, unEstilo);
+    private static String[] tipoPrenda = { "Remera", "Abrigo", "Musculosa" };
+    private static Random random = new Random();
+
+    public ParteDeArriba(Estilo unEstilo) {
+        super(obtenerPrendaAleatoria(), unEstilo);
     }
 
     public String confeccionar(){
@@ -24,6 +30,12 @@ class ParteDeArriba extends Indumentaria {
         prendaFinal = prendaFinal + " de " +estilo.aplicarDetalleTextura(nombrePrenda);
 
         return prendaFinal;
+    }
+
+    private static String obtenerPrendaAleatoria(){
+        int index = random.nextInt(tipoPrenda.length);
+        String prenda = tipoPrenda[index];
+        return prenda;
     }
 }
 
@@ -43,9 +55,11 @@ class Vestido extends Indumentaria {
 }
 
 class ParteDeAbajo extends Indumentaria {
-    public ParteDeAbajo(String nombrePrenda, Estilo estilo) {
-        super(nombrePrenda, estilo);
+    private static String[] tipoPrenda = { "Pantalon", "Short", "Pollera" };
+    private static Random random = new Random();
 
+    public ParteDeAbajo(Estilo estilo) {
+        super(obtenerPrendaAleatoria(), estilo);
     }
 
     @Override
@@ -55,5 +69,11 @@ class ParteDeAbajo extends Indumentaria {
         prendaFinal = prendaFinal + " de " + estilo.aplicarDetalleTextura(nombrePrenda);
 
         return prendaFinal;
+    }
+
+    private static String obtenerPrendaAleatoria(){
+        int index = random.nextInt(tipoPrenda.length);
+        String prenda = tipoPrenda[index];
+        return prenda;
     }
 }

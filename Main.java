@@ -19,33 +19,29 @@ public class Main {
         /* Se crean los callables con las tareas a realizar */
         Callable<String> generarPrendasArriba = () -> {
             int estilo, prenda;
-            String[] tipoPrenda = { "Remera", "Abrigo", "Musculosa" };
-
             Random random = new Random();
 
             for (int i = 0; i < 10; i++) {
                 estilo = random.nextInt(2);
-                prenda = random.nextInt(3);
-
-                parteArribaList.add(new ParteDeArriba(tipoPrenda[prenda], arrayEstilo[estilo]));
+                parteArribaList.add(new ParteDeArriba(arrayEstilo[estilo]));
             }
+
             pestillo.countDown();
+
             return "Se generó la lista de partes de arriba con exito.";
         };
 
         Callable<String> generarPrendasAbajo = () -> {
-            int estilo, prenda;
-            String[] tipoPrenda = { "Pantalon", "Short", "Pollera" };
+            int estilo;
             Random random = new Random();
 
             for (int i = 0; i < 10; i++) {
                 estilo = random.nextInt(2);
-                prenda = random.nextInt(3);
-
-                parteAbajoList.add(new ParteDeAbajo(tipoPrenda[prenda], arrayEstilo[estilo]));
-
+                parteAbajoList.add(new ParteDeAbajo(arrayEstilo[estilo]));
             }
+
             pestillo.countDown();
+
             return "Se generó la lista de prendas de abajo con exito";
         };
 
@@ -63,10 +59,9 @@ public class Main {
             return "Se generó la lista de vestidos con exito.";
         };
 
-        
-
-        Callable<String> mostrarPrendas = () -> { /* Imprimo la lista de las prendas */
+        Callable<String> mostrarPrendas = () -> {
             pestillo.await(); // espera hasta que terminen de armarse las sublistas
+            
             System.out.println("La lista de prendas de moda generada es: ");
             /* Imprime cada una de las listas */
             for (Indumentaria prenda : parteAbajoList) {
