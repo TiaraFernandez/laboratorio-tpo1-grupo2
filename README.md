@@ -9,3 +9,5 @@
 **Dominio de Aplicación**: El dominio de aplicacion va a ser un collage de indumentaria de moda, el cual va a mostrar las ultimas tendencias en moda. 
 
 ## Instrucciones de Ejecución 
+
+Se ejecuta corriendo el archivo Main.java
