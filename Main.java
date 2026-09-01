@@ -18,7 +18,7 @@ public class Main {
 
         /* Se crean los callables con las tareas a realizar */
         Callable<String> generarPrendasArriba = () -> {
-            int estilo, prenda;
+            int estilo;
             Random random = new Random();
 
             for (int i = 0; i < 10; i++) {
